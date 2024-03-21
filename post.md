@@ -1,8 +1,8 @@
-# Lab 5: Finite State Machine Design
+# Lab 5: Sequential Circuit Design
 
 ## Overview and Motivation
 
-In this lab, we will be designing a circuit that reads a binary number and determines if that input is divisible by 3. Sounds a bit tricky, right? Actually, with some careful planning, you can also build your own circuit, and possibly even more complicated ones, as long as you follow our design pipeline! This lab should get you familiar with the finite state machine (FSM) process, introduce you to the J-K flip-flop, drawing K-Maps, and get you some practice on circuit building. Let's get started!
+In this lab, we will be designing a circuit that reads a binary number and determines if that input is divisible by 3. The binary number will be fed to the circuit, one bit at a time, starting with the highest order bit and ending with the lowest order bit. Sounds a bit tricky, right? Actually, with some careful planning, you can also build your own circuit, and possibly even more complicated ones, as long as you follow our design pipeline! This lab should get you familiar with the sequential circuit design process, introduce you to the J-K flip-flop, drawing K-Maps, and get you some practice on circuit building. Let's get started!
 
 ## Activities:
 
@@ -108,9 +108,35 @@ And the boolean expressions should look like this:
 
 You figured out all the necessary logic to build our circuit! Time to test it with Logisim.
 
+### 5. Building our circuit
+
+If we look at the boolean expression for J<sub>0</sub>, it is essentially Q<sub>1</sub> xor x. Besides that, we just need an output pin for F, and everything else is pretty straight forward. Your Logisim circuit should look like this:
+
+<img width="832" alt="Screenshot 2024-03-06 at 6 43 00 PM" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/a9bf8e68-c44f-4255-ac77-aff4e5b8f4c1">
+
+There are some things on the circuit that might look unfamiliar to you. First is a pin called "clock". What this does is that it ensures the state of the flip-flop is updated only when the clock is high. This allows us determine when to update our states. Another unfamiliar pin is the "reset" pin. In both the Logisim flip-flop and the real-life flip-flop, there are 2 pins called "Preset" and "Clear". The former ensures that the flip-flop stays on 1, while the latter ensures that the flip-flop stays on 0. We have the "reset" pin wired to the "Clear" pin on both flip-flops so that when we need to reset our circuit, we can just toggle that "reset" pin. The values of the 2 flip-flops will be set back to both 0. For our purposes, we don't need to wire the "Preset" pins.
+
+Try passing a couple of inputs in your Logisim model to see if the F output pin lights up when expected. When you're ready, we will build the real thing!
+
 ## Testing
 
+Several things to note when building our real-life circuit:
+
+- The 7476 IC chip has inverted "Preset" and "Clear" pins, which means that we have to wire the "Clear" pin to a logic switch set to HIGH by default (We use switch S<sub>8</sub>). When we want to reset the circuit, toggle the switch to LOW, then back to HIGH again. The layout of the 7476 chip is as follow:
+
+<img width="207" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/4fa3c6fd-9761-4592-b76d-e92f7506aef3">
+
+- Our clock will be 1 of the 2 debounced pushbuttons on the breadboard. Explaining how they work is outside the scope of this lab, but what you need to do is use the NC (Normally Closed) pins on the button. Use a resistor and wire one end to +5V on the breadboard, and the other end to the button. Doing this ensures that when the button is depressed, it sends a LOW signal and when it is pressed the signal will be HIGH. You can use a wire and plug the button straight to the clock pin on the chip. Whenever you want to update the state of the flip-flops, just press the button.
+
+- We will use switch S<sub>1</sub> as our input x. When testing, we will set our desired value of x, then press the button to pass it into the circuit.
+
+That's it! Here is the video demonstrating our circuit at work:
+
+https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/3dc7c9a4-ad4d-4897-9bc8-94cc8db99eca
+
 ## Conclusion
+
+This is a hefty lab with different components, either on paper, on the computer or in real-life. However, it also introduces us to a lot of new concepts, which all fall under the sequential circuit design process. We get to know the J-K flip-flop, drawing K-Maps to simplify boolean expressions, and building a reasonably complicated circuit. We hope this has been helpful for you, and please give it a try!
 
 
 
