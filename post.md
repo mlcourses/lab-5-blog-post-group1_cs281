@@ -56,6 +56,58 @@ Now that we have a grasp on flip-flops, let's combine it with our DFA to create 
 
 ### 3. Function table
 
+Now, we will draw our function table, which tells us what we need to know about our circuit. Let's take a look at it first:
+
+<img width="818" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/80c0db3a-f49f-4c61-849b-f457b53a3ced">
+
+This is a BIG table! Let's break it down:
+
+- The first column, "Curr", is the current state of our circuit. It can be S<sub>0</sub>, S<sub>1</sub> or S<sub>2</sub>.
+- The next 2 columns, Q<sub>1</sub> and Q<sub>0</sub>, are the flip-flop values corresponding to our current state in the first column. Note that since we don't care when both of them are 1, the last 2 rows are filled with Xs.
+- The next column, "x", is the next digit of our input. By putting x in, it may change the state of our circuit.
+- The next column, "Next", represents that state that our circuit will be in AFTER reading the digit in the previous column. So for example, in the first row, when we are currently in state S<sub>0</sub>, if we read in a 0, we will still be in state S<sub>0</sub>.
+- The next 2 columns, Q<sub>1</sub>' and Q<sub>0</sub>', are the flip-flop values corresponding to the state specified in the "Next" column.
+- The next 4 columns, J<sub>1</sub>, K<sub>1</sub>, J<sub>0</sub> and K<sub>0</sub>, are the J and K values needed to transform Q<sub>1</sub> and Q<sub>0</sub> values to Q<sub>1</sub>' and Q<sub>0</sub>' values. The subscript of each J and K represents which flip-flop they belong to.
+- The final column, F, represent whether the CURRENT ("Curr" column, not "Next") state is the accepting state S<sub>0</sub>. If it is S<sub>0</sub>, F is 1 and otherwise F is 0.
+
+With this table, we can see how a combination of Q<sub>1</sub>, Q<sub>0</sub> and x (input) can lead to a combination of J<sub>1</sub>, K<sub>1</sub>, J<sub>0</sub>, K<sub>0</sub> and F (output). In order to map these inputs to our desired outputs, we will use K-Maps.
+
+### 4. K-Maps
+
+A K-Map looks like this:
+
+<img width="361" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/14af9ad7-38ab-4a0e-a6ec-317f7de014b9">
+
+This is the K-Map for J<sub>1</sub>. We can see that our inputs Q<sub>1</sub>, Q<sub>0</sub> and x create a 2D matrix, with Q<sub>1</sub> on one side and Q<sub>0</sub> and x combined on the other side. We will fill in the value of J<sub>1</sub> based on our function table above. So for example, when the inputs are all 0, J<sub>1</sub> is 0. So 0 is filled in the cell corresponding to the input values. Note that when you have more than 2 inputs on a side (our Q<sub>0</sub> and x in this example), you should only change 1 bit at a time going from row to row (or column to column in our example). Thus, our Q<sub>0</sub> and x values go from 00 to 01 (x change), then 11 (Q<sub>0</sub> change), then 10 (x change) instead of the familiar 00, 01, 10, 11 sequence.
+
+After filling out the K-Map, our goal is to draw rectangles that will be our boolean expression that represent that particular input-output combination. The rules for drawing rectangles are as follow:
+- All 1s in the K-Map must be in a rectangle.
+- Rectangles can overlap.
+- The rectangle size must be powers of 2.
+- You should draw as big rectangles as possible, and use as few rectangles as possible.
+- Rectangles can "wrap around" both horizontally and vertically, meaning that, for example, the furthest right cell is actually adjacent to the furthest left cell.
+- "Don't cares" (X) are wild-cards: you can treat them as 1s if they help you draw bigger rectangles, or 0 if they don't.
+
+So in the example above, we only have 1 cell with the value 1. We can technically just use a 1x1 square to cover that 1, but we can use the X below it to create a bigger 1x2 rectangle. The remaining Xs are unhelpful, so we leave them out.
+
+After drawing the rectangles, we will create our boolean expression for our output, which in this case is J<sub>1</sub>. In the top cell, the inputs are ~Q<sub>1</sub>Q<sub>0</sub>~x, and in the bottom cell the inputs are Q<sub>1</sub>Q<sub>0</sub>~x, so our boolean expression is ~Q<sub>1</sub>Q<sub>0</sub>~x + Q<sub>1</sub>Q<sub>0</sub>~x = (~Q<sub>1</sub> + Q<sub>1</sub>)Q<sub>0</sub>~x = Q<sub>0</sub>~x.
+
+Now draw the remaining K-Maps and create boolean expressions for the remaining outputs K<sub>1</sub>, J<sub>0</sub>, K<sub>0</sub> and F. If you did your work correctly, it should look like this:
+
+<img width="356" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/c5bc15be-c403-440f-9dd0-54ee65d2eb4b">
+
+<img width="359" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/68afa66e-0ed4-47c7-8f63-2ed87af42531">
+
+<img width="386" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/1f7d5949-8f0a-460c-8bc3-9e987e369bc2">
+
+<img width="325" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/c81b005b-292b-43de-8c3a-4259fb14e77c">
+
+And the boolean expressions should look like this:
+
+<img width="287" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/9d2f8e04-46a4-456a-a099-d63063f3e2df">
+
+You figured out all the necessary logic to build our circuit! Time to test it with Logisim.
+
 ## Testing
 
 ## Conclusion
