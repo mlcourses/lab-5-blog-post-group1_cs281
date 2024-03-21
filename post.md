@@ -39,7 +39,22 @@ The J-K flip-flop is essentially a device that can retain 1 bit of information, 
 
 <img width="391" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/70bd8008-0da3-4439-878b-678ee4b2d3af">
 
+So if Q<sub>t</sub> is 0, and we want Q<sub>t+1</sub> to also be 0, we can either have J and K be both 0, or J be 0 and K be 1. Either case, J must be 0 but K can be either 0 or 1. In this case, we call the value of K a "don't care". If, on the other hand, Q<sub>t</sub> is 0 and we want Q<sub>t+1</sub> to be 1, we can either have J be 1 and K be 0, or J and K both be 1. In other words, J must be 1 and K is a "don't care". We can summarize all transitions from Q<sub>t</sub> to Q<sub>t+1</sub> in the table below (Q<sub>t+1</sub> is denoted as Q', and "don't care" is denoted as X):
 
+<img width="267" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/9ec97a43-bfbb-41d4-a396-91cf48564475">
+
+Since Q can be either 0 or 1, we can use a single flip-flop to denote 2 states of our circuit. But since our a circuit have 3 states (according to our DFA), we will need 2 flip-flops to be able to represent 3 states. Let the 2 flip-flops be Q<sub>0</sub> and Q<sub>1</sub>, so we can denote our 3 states as follow (since we only have 3 states, we won't really care what happens when both flip-flops are 1):
+
+| Q<sub>0</sub> | Q<sub>1</sub> | State |
+| ------------- | ------------- | ----- |
+| 0 | 0 | S<sub>0</sub> |
+| 0 | 1 | S<sub>1</sub> |
+| 1 | 0 | S<sub>2</sub> |
+| 1 | 1 | X |
+
+Now that we have a grasp on flip-flops, let's combine it with our DFA to create a function table!
+
+### 3. Function table
 
 ## Testing
 
