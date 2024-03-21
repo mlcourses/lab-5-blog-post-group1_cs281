@@ -1,4 +1,4 @@
-# Lab X: Doing stuff with hardware!
+# Lab 5: Finite State Machine Design
 
 Please write a blog post describing your lab here.
 
