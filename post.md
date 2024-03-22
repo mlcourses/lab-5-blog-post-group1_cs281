@@ -122,8 +122,7 @@ Try passing a couple of inputs in your Logisim model to see if the F output pin 
 
 Several things to note when building our real-life circuit:
 
-- The 7476 IC chip has inverted "Preset" and "Clear" pins, which means that we have to wire the "Clear" pin to a logic switch set to HIGH by default (We use switch S<sub>8</sub>). When we want to reset the circuit, toggle the switch to LOW, then back to HIGH again. The layout of the 7476 chip is as follow:
-
+- The 7476 IC chip has inverted "Preset" and "Clear" pins, which means that we have to wire the "Clear" pin to a logic switch set to HIGH by default (We use switch S<sub>8</sub>). When we want to reset the circuit, toggle the switch to LOW, then back to HIGH again. The layout of the 7476 chip is as follow (each chip contains 2 J-K flip-flops, so we will only need 1 chip for our circuit):
 <img width="207" alt="image" src="https://github.com/mb-linh/lab-5-blog-post-group1_cs281/assets/97915038/4fa3c6fd-9761-4592-b76d-e92f7506aef3">
 
 - Our clock will be 1 of the 2 debounced pushbuttons on the breadboard. Explaining how they work is outside the scope of this lab, but what you need to do is use the NC (Normally Closed) pins on the button. Use a resistor and wire one end to +5V on the breadboard, and the other end to the button. Doing this ensures that when the button is depressed, it sends a LOW signal and when it is pressed the signal will be HIGH. You can use a wire and plug the button straight to the clock pin on the chip. Whenever you want to update the state of the flip-flops, just press the button.
